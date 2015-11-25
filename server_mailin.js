@@ -6,6 +6,31 @@ var fs = require('fs');
 var cheerio = require('cheerio');
 var multiparty = require('multiparty');
 var util = require('util');
+var mongoose = require('mongoose');
+
+// DB Schema and Model Setup
+var appointmentSchema, Appointment;
+
+// DB Connection Setup
+mongoose.connect('mongodb://oleg:oleg@ds059284.mongolab.com:59284/mlc_dates');
+var db = mongoose.connection;
+db.once('open', function() {
+	console.log('MongoDB connection established');
+	appointmentSchema = mongoose.Schema({
+		fname: String,
+		lname: String,
+		phone: String,
+		email: String,
+		p_month: Number,
+		p_day: Number,
+		p_year: Number,
+		p_time: String,
+		p_am_pm: String,
+		status: Number
+	});
+
+	Appointment = mongoose.model('Appointment', appointmentSchema);
+});
 
 
 // Helper Functions
@@ -73,12 +98,17 @@ server.post('/incoming', function (req, res) {
 			p_year:		extract($, info[6]).split('/')[2],
 			p_time: 	extract($, info[7]),
 			p_am_pm: 	extract($, info[8]),
-			status:		(status_text.indexOf('Approved') === -1) ? 'declined' : 'approved'
+			status:		(status_text.indexOf('Approved') === -1) ? 0 : 1
 		};
 
 		console.log(obj);
 		
 		// CODE TO ADD obj TO DATABASE
+		var app = new Appointment(obj);
+		app.save(function(err) {
+			if(err) console.log('ERROR: Unable to save.' + err);
+			else console.log('Appointment saved to DB');
+		});
             },
             writeAttachments: function (cbAuto) {
                 var msg = JSON.parse(fields.mailinMsg);
