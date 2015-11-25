@@ -3,13 +3,18 @@
 var async = require('async');
 var express = require('express');
 var fs = require('fs');
+var cheerio = require('cheerio');
 var multiparty = require('multiparty');
 var util = require('util');
 
 
+// Helper Functions
+function extract(jq, elem) {
+	return jq(elem).text().slice(22);
+}
+
 /* Make an http server to receive the webhook. */
 var server = express();
-//server.use(server.router);
 
 server.head('/incoming', function (req, res) {
     console.log('Received head request from webhook.');
@@ -52,7 +57,28 @@ server.post('/incoming', function (req, res) {
         /* Write down the payload for ulterior inspection. */
         async.auto({
             writeParsedMessage: function (cbAuto) {
-                fs.writeFile('payload.json', fields.mailinMsg, cbAuto);
+		console.log('=========== Incoming Email ============');
+		var html = JSON.parse(fields.mailinMsg[0]).html;
+		
+		var $ = cheerio.load(html);
+		var info = $('span');
+		var status_text = $($('b')[4]).text();
+		var obj = {
+			fname: 		extract($, info[0]),
+			lname: 		extract($, info[1]),
+			phone: 		extract($, info[3]),
+			email: 		extract($, info[5]),
+			p_month:	extract($, info[6]).split('/')[0],
+			p_day:		extract($, info[6]).split('/')[1],
+			p_year:		extract($, info[6]).split('/')[2],
+			p_time: 	extract($, info[7]),
+			p_am_pm: 	extract($, info[8]),
+			status:		(status_text.indexOf('Approved') === -1) ? 'declined' : 'approved'
+		};
+
+		console.log(obj);
+		
+		// CODE TO ADD obj TO DATABASE
             },
             writeAttachments: function (cbAuto) {
                 var msg = JSON.parse(fields.mailinMsg);
@@ -63,10 +89,10 @@ server.post('/incoming', function (req, res) {
         }, function (err) {
             if (err) {
                 console.log(err.stack);
-                res.send(500, 'Unable to write payload');
+                res.sendStatus(500, 'Unable to write payload');
             } else {
                 console.log('Webhook payload written.');
-                res.send(200);
+                res.sendStatus(200);
             }
         });
     });
