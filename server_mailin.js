@@ -111,16 +111,21 @@ server.post('/incoming', function (req, res) {
 		var $ = cheerio.load(html);
 		var info = $('span');
 		var status_text = $($('b')[4]).text();
+
+        var date_regex = /[\\\/-]/;
+        var date_components = extract($, info[6]).split(date_regex);
+
+
 		var obj = {
 			fname: 		extract($, info[0]),
 			lname: 		extract($, info[1]),
 			phone: 		extract($, info[3]),
 			email: 		extract($, info[5]),
-			p_month:	extract($, info[6]).split('/')[0],
-			p_day:		extract($, info[6]).split('/')[1],
-			p_year:		extract($, info[6]).split('/')[2],
+			p_month:	date_components[0],
+			p_day:		date_components[1],
+			p_year:		date_components[2],
 			p_time: 	extract($, info[7]),
-			p_am_pm: 	extract($, info[8]),
+			p_am_pm: 	extract($, info[8]).toUpperCase(),
 			coach: 		extract($, info[20]),
 			status:		(status_text.indexOf('Approved') === -1) ? 0 : 1
 		};
