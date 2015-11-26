@@ -1,0 +1,121 @@
+Received: by vkha189 with SMTP id a189so47610961vkh.2
+        for <bro@mlcdates.com>; Wed, 25 Nov 2015 21:49:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        bh=UP34mYOOG8NvKyv03ArYP+bweGA2Vm78LNQujd7PH3c=;
+        b=Sq3MnhZAr0ceadYf4/TiZbSM1+HhxI6UpdI43yqUiQRt4dbxT2uQ9dwO069nFWiNYJ
+         2M0Oe2/VWB021fe9aL5SKBc9F6SOLR0ItPqNYezYnuN4GzW0Dp10wUtac2Z0XIXzD84m
+         ltJLS3nZiHjQXePU0q+IK2zFvfxXTKWQC7qv8yHBwTckmwNmv61ICbPQ9PzjptzIeB1H
+         XInxol7RKwrwVorJX0ceGWrncniRqxk22siVJS8SkJTPX5jAr2nQwxHTfSGtqC7XVeMu
+         0rzQceDpA2t39TgUW8dLiJR+MAutu9P16vgvsXhvI9Pb4CkwDHpOO496qRNFkE5fjxki
+         o1fA==
+MIME-Version: 1.0
+X-Received: by 10.31.33.75 with SMTP id h72mr37366487vkh.21.1448516962214;
+ Wed, 25 Nov 2015 21:49:22 -0800 (PST)
+Received: by 10.31.51.65 with HTTP; Wed, 25 Nov 2015 21:49:22 -0800 (PST)
+In-Reply-To: <CAHY_HDfHphzaV_VxfFyX=r6-_2hNYOc7cj+AEHwuQ6MgcPkwvg@mail.gmail.com>
+References: <4DF8F6A3-F0CB-4E6A-8AF8-C6B98F856EF2@miamilimocoach.com>
+	<3B7C8541-3A24-415A-B84E-5CE1B6829696@aol.com>
+	<CAHY_HDfHphzaV_VxfFyX=r6-_2hNYOc7cj+AEHwuQ6MgcPkwvg@mail.gmail.com>
+Date: Thu, 26 Nov 2015 00:49:22 -0500
+Message-ID: <CAHY_HDfgt_zM6ML4tGMF9xdaPAfxERNZtePMrNfBRST_S06XNQ@mail.gmail.com>
+Subject: Fwd: Transaction Declined - Invoice #
+From: Salman Tariq Mirza <stariqmi@gmail.com>
+To: bro@mlcdates.com
+Content-Type: multipart/alternative; boundary=001a11c01bcafbe78205256b22bb
+
+--001a11c01bcafbe78205256b22bb
+Content-Type: text/plain; charset=UTF-8
+
+*From:* support@usaepay.com
+*Date:* November 17, 2015 at 6:49:28 PM EST
+*To:* info@miamilimocoach.com
+*Subject:* *Transaction Declined - Invoice #*
+
+First Name:           Latoya
+Last Name:            Miller
+Company:
+Phone:                7866608578
+Phone Number #2:
+Email:                Toyanmannie13@gmail.com
+Pick up Date:         10/20/15
+Pick up Time:         10:30
+AM or PM:             Pm
+Pick up Address:      21001 nw 27ave
+Pick up City:         Miami Gardens, FL
+Pick up Zip:          33056
+Drop-off Time:        3:30 Am
+Drop-off Address:
+Number of Passengers: 35
+Per Person Rate:
+Total Price:          $200
+Hourly rate:          $
+Hours Needed:         5
+Type of Occasion:     Birthday
+Limo Coach #:         2
+Special Instructions: Have driver call when he is outside
+Date:                 Tue, 17 Nov 2015 15:49:28 -0800
+Result: Declined
+Reason:               Insufficient funds
+
+Merchant:             MIAMI LIMO COACH
+Type:                 Sale
+Source:               Reservation Form 2
+Amount:               $200
+Card Holder:               Latoya D Miller
+Card Number:          XXXXXXXXXXXX7637
+
+--001a11c01bcafbe78205256b22bb
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: base64
+
+PGRpdiBkaXI9Imx0ciI+PGRpdiBjbGFzcz0iZ21haWxfcXVvdGUiPjxkaXYgZGlyPSJsdHIiPjxk
+aXYgY2xhc3M9ImdtYWlsX3F1b3RlIj48ZGl2IGRpcj0iYXV0byI+PGJsb2NrcXVvdGUgdHlwZT0i
+Y2l0ZSI+PHNwYW4gY2xhc3M9IiI+PGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PGI+RnJvbTo8L2I+
+IDxhIGhyZWY9Im1haWx0bzpzdXBwb3J0QHVzYWVwYXkuY29tIiB0YXJnZXQ9Il9ibGFuayI+c3Vw
+cG9ydEB1c2FlcGF5LmNvbTwvYT48YnI+PGI+RGF0ZTo8L2I+IE5vdmVtYmVyIDE3LCAyMDE1IGF0
+IDY6NDk6MjggUE0gRVNUPGJyPjxiPlRvOjwvYj4gPGEgaHJlZj0ibWFpbHRvOmluZm9AbWlhbWls
+aW1vY29hY2guY29tIiB0YXJnZXQ9Il9ibGFuayI+aW5mb0BtaWFtaWxpbW9jb2FjaC5jb208L2E+
+PGJyPjxiPlN1YmplY3Q6PC9iPiA8Yj5UcmFuc2FjdGlvbiBEZWNsaW5lZCAtIEludm9pY2UgIzwv
+Yj48YnI+PGJyPjwvYmxvY2txdW90ZT48L3NwYW4+PGJsb2NrcXVvdGUgdHlwZT0iY2l0ZSI+PGRp
+dj48c3BhbiBjbGFzcz0iIj48c3Bhbj5GaXJzdCBOYW1lOiDCoMKgwqDCoMKgwqDCoMKgwqDCoExh
+dG95YTwvc3Bhbj48YnI+PHNwYW4+TGFzdCBOYW1lOiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgTWls
+bGVyPC9zcGFuPjxicj48c3Bhbj5Db21wYW55OiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDwv
+c3Bhbj48YnI+PHNwYW4+UGhvbmU6IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDxhIGhy
+ZWY9InRlbDo3ODY2NjA4NTc4IiB2YWx1ZT0iKzE3ODY2NjA4NTc4IiB0YXJnZXQ9Il9ibGFuayI+
+Nzg2NjYwODU3ODwvYT48L3NwYW4+PGJyPjxzcGFuPlBob25lIE51bWJlciAjMjogwqDCoMKgwqDC
+oDwvc3Bhbj48YnI+PHNwYW4+RW1haWw6IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoDxh
+IGhyZWY9Im1haWx0bzpUb3lhbm1hbm5pZTEzQGdtYWlsLmNvbSIgdGFyZ2V0PSJfYmxhbmsiPlRv
+eWFubWFubmllMTNAZ21haWwuY29tPC9hPjwvc3Bhbj48YnI+PC9zcGFuPjxzcGFuPlBpY2sgdXAg
+RGF0ZTogwqDCoMKgwqDCoMKgwqDCoDEwLzIwLzE1PC9zcGFuPjxzcGFuIGNsYXNzPSIiPjxicj48
+c3Bhbj5QaWNrIHVwIFRpbWU6IMKgwqDCoMKgwqDCoMKgwqAxMDozMDwvc3Bhbj48YnI+PHNwYW4+
+QU0gb3IgUE06IMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoFBtPC9zcGFuPjxicj48c3Bhbj5QaWNr
+IHVwIEFkZHJlc3M6IMKgwqDCoMKgwqAyMTAwMSBudyAyN2F2ZTwvc3Bhbj48YnI+PHNwYW4+UGlj
+ayB1cCBDaXR5OiDCoMKgwqDCoMKgwqDCoMKgTWlhbWkgR2FyZGVucywgRkw8L3NwYW4+PGJyPjxz
+cGFuPlBpY2sgdXAgWmlwOiDCoMKgwqDCoMKgwqDCoMKgwqAzMzA1Njwvc3Bhbj48YnI+PHNwYW4+
+RHJvcC1vZmYgVGltZTogwqDCoMKgwqDCoMKgwqAzOjMwIEFtPC9zcGFuPjxicj48c3Bhbj5Ecm9w
+LW9mZiBBZGRyZXNzOiDCoMKgwqDCoDwvc3Bhbj48YnI+PHNwYW4+TnVtYmVyIG9mIFBhc3Nlbmdl
+cnM6IDM1PC9zcGFuPjxicj48c3Bhbj5QZXIgUGVyc29uIFJhdGU6IMKgwqDCoMKgwqA8L3NwYW4+
+PGJyPjxzcGFuPlRvdGFsIFByaWNlOiDCoMKgwqDCoMKgwqDCoMKgwqAkMjAwPC9zcGFuPjxicj48
+c3Bhbj5Ib3VybHkgcmF0ZTogwqDCoMKgwqDCoMKgwqDCoMKgJDwvc3Bhbj48YnI+PHNwYW4+SG91
+cnMgTmVlZGVkOiDCoMKgwqDCoMKgwqDCoMKgNTwvc3Bhbj48YnI+PHNwYW4+VHlwZSBvZiBPY2Nh
+c2lvbjogwqDCoMKgwqBCaXJ0aGRheSA8L3NwYW4+PGJyPjxzcGFuPkxpbW8gQ29hY2ggIzogwqDC
+oMKgwqDCoMKgwqDCoDI8L3NwYW4+PGJyPjxzcGFuPlNwZWNpYWwgSW5zdHJ1Y3Rpb25zOiBIYXZl
+IGRyaXZlciBjYWxsIHdoZW4gaGUgaXMgb3V0c2lkZSA8L3NwYW4+PGJyPjxzcGFuPkRhdGU6IMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgVHVlLCAxNyBOb3YgMjAxNSAxNTo0OToyOCAt
+MDgwMDwvc3Bhbj48YnI+PHNwYW4+UmVzdWx0OiBEZWNsaW5lZDwvc3Bhbj48YnI+PHNwYW4+UmVh
+c29uOiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgSW5zdWZmaWNpZW50IGZ1bmRzPC9zcGFu
+Pjxicj48c3Bhbj48L3NwYW4+PGJyPjxzcGFuPk1lcmNoYW50OiDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqBNSUFNSSBMSU1PIENPQUNIIDwvc3Bhbj48YnI+PHNwYW4+VHlwZTogwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqBTYWxlPC9zcGFuPjxicj48c3Bhbj5Tb3VyY2U6IMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqBSZXNlcnZhdGlvbiBGb3JtIDI8L3NwYW4+PGJyPjxzcGFuPkFt
+b3VudDogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCQyMDA8L3NwYW4+PGJyPjxzcGFuPkNh
+cmQgSG9sZGVyOiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgTGF0b3lhIEQgTWlsbGVyPC9z
+cGFuPjxicj48c3Bhbj5DYXJkIE51bWJlcjogwqDCoMKgwqDCoMKgwqDCoMKgWFhYWFhYWFhYWFhY
+NzYzNzwvc3Bhbj48YnI+PHNwYW4+PC9zcGFuPjxicj48c3Bhbj48L3NwYW4+PGJyPjxzcGFuPjwv
+c3Bhbj48YnI+PHNwYW4+PC9zcGFuPjxicj48c3Bhbj48L3NwYW4+PGJyPjxzcGFuPjwvc3Bhbj48
+YnI+PHNwYW4+PC9zcGFuPjxicj48L3NwYW4+PC9kaXY+PC9ibG9ja3F1b3RlPjwvYmxvY2txdW90
+ZT48L2Rpdj48L2Rpdj48YnI+PC9kaXY+DQo8L2Rpdj48YnI+PC9kaXY+DQo=
+--001a11c01bcafbe78205256b22bb--

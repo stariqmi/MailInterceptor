@@ -24,7 +24,7 @@
 
       .day .appointment {
         margin: 2px 0 0 5px;
-        color: blue;
+        /*color: blue;*/
         cursor: pointer;
       }
     </style>
@@ -88,8 +88,13 @@
 
       var Appointment = React.createClass({
         render: function() {
+
+            var style = {
+              color: (this.props.data.status) ? 'blue' : 'red'
+            }
+
             return (
-              <p className="appointment" onClick={this.props.onClick} >
+              <p className="appointment" onClick={this.props.onClick} style={style}>
                 #{this.props.data.coach}, {this.props.data.p_time} - {this.props.data.p_am_pm}, Status: {this.props.data.status}
               </p>
             );
