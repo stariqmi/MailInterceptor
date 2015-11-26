@@ -1,0 +1,144 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Oleg Calendar</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <style>
+      .day {
+        width: 180px;
+        height: 180px;
+        border: 2px solid black;
+        float: left;
+        margin: 5px 5px 5px 5px;
+      }
+
+      .day h1 {
+        margin: 2px 0 0 2px;
+      }
+
+      .day .appointment {
+        margin: 2px 0 0 5px;
+        color: blue
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script type="text/babel">
+
+    var path_components = location.pathname.split('/').slice(2);
+    var year = path_components[0];
+    var month = path_components[1]
+
+    var data = [
+      [], // Day 1
+      [], // Day 2
+      [], // Day 3
+      [], // Day 4
+      [], // Day 5
+      [], // Day 6
+      [], // Day 7
+      [], // Day 8
+      [], // Day 9
+      [], // Day 10
+      [], // Day 11
+      [], // Day 12
+      [], // Day 13
+      [], // Day 14
+      [], // Day 15
+      [], // Day 16
+      [], // Day 17
+      [], // Day 18
+      [], // Day 19
+      [], // Day 20
+      [], // Day 21
+      [], // Day 22
+      [], // Day 23
+      [], // Day 24
+      [], // Day 25
+      [], // Day 26
+      [], // Day 27
+      [], // Day 28
+      [], // Day 29
+      [], // Day 30
+      []  // Day 31
+    ];
+
+    var months = {
+      1: 'January',
+      2: 'February',
+      3: 'March',
+      4: 'April',
+      5: 'May',
+      6: 'June',
+      7: 'July',
+      8: 'August',
+      9: 'September',
+      10: 'October',
+      11: 'November',
+      12: 'December'
+    };
+
+      var Day = React.createClass({
+        render: function() {
+        
+          var apps = this.props.data.map(function(elem, i) {
+            return <p className="appointment" key={i} data={elem} >#{elem.coach}, {elem.p_time} - {elem.p_am_pm}, Status: {elem.status}</p>
+          });
+
+          return ( 
+            <div className="day">
+              <h1>{this.props.index + 1}</h1>
+              {apps}
+            </div>
+          );
+        }
+      });
+
+      var Month = React.createClass({
+        render: function() {
+          
+          var days = this.props.data.map(function(day, i) {
+            return <Day data={day} key={i} index={i}></Day>
+          });
+
+          return (
+              <div className="month">
+                <center><h1>{months[month]}</h1></center>
+                {days}
+              </div>
+          );
+        }
+      });
+
+      // Fetch data from web.mlcdates.com
+      $.ajax({
+        url: 'http://web.mlcdates.com/calendar_query/' + year + '/' + month,
+        dataType: 'json',
+        success: function(response) {
+          response.forEach(function(elem) {
+            // console.log(elem);
+            data[elem.p_day - 1].push(elem);
+          });
+
+          // console.log(data);
+
+          ReactDOM.render(
+            <Month data={data} />,
+            document.getElementById('content')
+          );
+        },
+        error: function(xhr, status, err) {
+          console.log('Failed to get data.');
+        }
+      });
+      
+    </script>
+  </body>
+</html>

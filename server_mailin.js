@@ -7,6 +7,7 @@ var cheerio = require('cheerio');
 var multiparty = require('multiparty');
 var util = require('util');
 var mongoose = require('mongoose');
+var path = require('path');
 
 // DB Schema and Model Setup
 var appointmentSchema, Appointment;
@@ -17,16 +18,17 @@ var db = mongoose.connection;
 db.once('open', function() {
 	console.log('MongoDB connection established');
 	appointmentSchema = mongoose.Schema({
-		fname: String,
-		lname: String,
-		phone: String,
-		email: String,
-		p_month: Number,
-		p_day: Number,
-		p_year: Number,
-		p_time: String,
-		p_am_pm: String,
-		status: Number
+		fname: {type: String, required: '{FNAME} is required'},
+		lname: {type: String, required: '{LNAME} is required'},
+		phone: {type: String, required: '{PHONE} is required'},
+		email: {type: String, required: '{EMAIL} is required'},
+		p_month: {type: String, required: '{PMONTH} is required'},
+		p_day: {type: String, required: '{PDAY} is required'},
+		p_year: {type: String, required: '{PYEAR} is required'},
+		p_time: {type: String, required: '{PTIME} is required'},
+		p_am_pm: {type: String, required: '{AM/PM} is required'},
+		coach: {type: String, required: '{COACH} is required'},
+		status: {type: String, required: '{STATUS} is required'}
 	});
 
 	Appointment = mongoose.model('Appointment', appointmentSchema);
@@ -40,6 +42,27 @@ function extract(jq, elem) {
 
 /* Make an http server to receive the webhook. */
 var server = express();
+
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+server.get('/calendar_query/:year/:month', function(req, res) {
+	console.log(req.params);
+	//res.send('Done');
+	
+	Appointment.find({p_year: parseInt(req.params.year), p_month: parseInt(req.params.month)})
+	.sort({p_day: 1})
+	.exec(function(err, result) {
+		res.send(result);
+	});
+});
+
+server.get('/calendar/:year/:month', function(req, res) {
+	res.sendFile(path.join(__dirname + '/calendar.html'));
+});
 
 server.head('/incoming', function (req, res) {
     console.log('Received head request from webhook.');
@@ -98,6 +121,7 @@ server.post('/incoming', function (req, res) {
 			p_year:		extract($, info[6]).split('/')[2],
 			p_time: 	extract($, info[7]),
 			p_am_pm: 	extract($, info[8]),
+			coach: 		extract($, info[20]),
 			status:		(status_text.indexOf('Approved') === -1) ? 0 : 1
 		};
 
