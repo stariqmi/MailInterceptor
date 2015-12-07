@@ -49,6 +49,8 @@ server.use(function(req, res, next) {
   next();
 });
 
+server.use(express.static('js'));
+
 server.get('/calendar_query/:year/:month', function(req, res) {
 	console.log(req.params);
 	//res.send('Done');
