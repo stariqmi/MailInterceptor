@@ -27,8 +27,9 @@ db.once('open', function() {
 		p_year: {type: String, required: '{PYEAR} is required'},
 		p_time: {type: String, required: '{PTIME} is required'},
 		p_am_pm: {type: String, required: '{AM/PM} is required'},
-		coach: {type: String, required: '{COACH} is required'},
-		status: {type: String, required: '{STATUS} is required'}
+		coach: {type: String},
+		status: {type: String, required: '{STATUS} is required'},
+		date: {type: String, required: '{DATE} is required'}
 	});
 
 	Appointment = mongoose.model('Appointment', appointmentSchema);
@@ -50,19 +51,19 @@ server.use(function(req, res, next) {
 });
 
 server.use(express.static('js'));
+server.use(express.static('css'));
 
-server.get('/calendar_query/:year/:month', function(req, res) {
+server.get('/calendar_query/:year', function(req, res) {
 	console.log(req.params);
 	//res.send('Done');
 	
-	Appointment.find({p_year: parseInt(req.params.year), p_month: parseInt(req.params.month)})
-	.sort({p_day: 1})
+	Appointment.find({p_year: parseInt(req.params.year)})
 	.exec(function(err, result) {
 		res.send(result);
 	});
 });
 
-server.get('/calendar/:year/:month', function(req, res) {
+server.get('/calendar', function(req, res) {
 	res.sendFile(path.join(__dirname + '/calendar.html'));
 });
 
@@ -123,13 +124,14 @@ server.post('/incoming', function (req, res) {
 			lname: 		extract($, info[1]),
 			phone: 		extract($, info[3]),
 			email: 		extract($, info[5]),
-			p_month:	date_components[0],
-			p_day:		date_components[1],
-			p_year:		date_components[2],
+			p_month:	date_components[0].toString(),
+			p_day:		date_components[1].toString(),
+			p_year:		date_components[2].toString(),
 			p_time: 	extract($, info[7]),
 			p_am_pm: 	extract($, info[8]).toUpperCase(),
 			coach: 		extract($, info[20]),
-			status:		(status_text.indexOf('Approved') === -1) ? 0 : 1
+			status:		(status_text.indexOf('Approved') === -1) ? 0 : 1,
+			date:		'20' + date_components[2] + '-' + date_components[0] + '-' + date_components[1]
 		};
 
 		console.log(obj);

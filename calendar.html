@@ -1,76 +1,133 @@
-<!-- index.html -->
-<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Oleg Calendar</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.3/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<head>
+		
+		<!-- Libraries required -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
 
-    <style>
-      .month h1 {
-        color: #C1CDCD;
-      }
+		<!-- CLNDR.js -->
+		<script type="text/javascript" src="clndr.min.js"></script>
 
-      .day, .reserve_day {
-        width: 180px;
-        height: 180px;
-        float: left;
-        margin: 6px 6px 6px 6px;
-      }
+		<link rel="stylesheet" type="text/css" href="calendar.css">		
+	</head>
+	<body>
+		<div class="calendar"></div>
+	</body>
 
-      .reserve_day {
-        background-color: #C1CDCD;
-        cursor: pointer;
-      }
+	<!-- Underscore Calendar Template -->
+	<script type="template/text" class="calendar-template">
+	
+		<div class="calendar-container">
+			<div class="clndr-controls">
+				<div class="clndr-previous-button"><</div>
+				<div class="month"><%= month + ' - ' + year %></div>
+				<div class="clndr-next-button">></div>
+			</div>
+			
+			<div class="day-wrapper">
+				<div class="dayOfWeek-container">
+					<% _.each(daysOfTheWeek, function(day) { %>
+						<div class="dayOfWeek"><%= day %></div>
+					<% }); %>
+				</div>
 
-      .day p.day_num {
-        margin: 0px;
-        line-height: 180px;
-        text-align: center;
-        color: #C1CDCD;
-        font-size: 38px;
-      }
+				<% _.each(days, function(day) { %>
+					<div class="<%= day.classes %>"><%= day.day %></div>
+				<% }); %>
+			</div>
+		</div>
+		<div class="events-container-main">
+		</div>
+	
+	</script>
 
-      .reserve_day p.day_num {
-        margin: 0px;
-        line-height: 105px;
-        text-align: center;
-        color: white;
-        font-size: 36px;
-      }
+	<script type="template/text" class="events-template">
+		<div class="event-day"><%= day %></div>
+		<div class="events-container">
+			<% _.each(evs, function(ev) { %>
+				<div class="event-elem">
+				 	<p><%= ev.lname + ', ' + ev.fname + ' - ' + ev.phone %></p>
+				 	<p>Coach # <%= ev.coach + ' - ' + ev.p_time + ' ' + ev.p_am_pm%></p>
+				 	<p>Status: <%= (ev.status === '0') ? 'Declined' : 'Approved'  %></p>
+				 	
+				</div>
+			<% }); %>
+		</div>
+	</script>
 
-      .reserve_count_wrapper {
-        width: 30px;
-        height: 30px;
-        background-color: red;
-        border-radius: 15px;
-        margin-top: 10px;
-        margin-left: 140px;
-      }
+	<!-- Custom JavaScript -->
+	<script type="text/javascript">
 
-      .reserve_day .reservation_count {
-        margin: 0px;
-        text-align: center;
-        line-height: 30px;
-        color: white;
-        font-size: 25px;
-        font-weight: bolder;
-        top: 2px;
-        left: 2px;
-      }
+	var events = [
+		{
+			fname: 'Salman',
+			lname: 'Tariq',
+			phone: '226-606-9930',
+			email: 'stariqmi@gmail.com',
+			date: '2015-12-20',
+			p_time: '12:30',
+			p_am_pm: 'am',
+			coach: 1,
+			status: 1
+		},
+		{
+			fname: 'Hammad',
+			lname: 'Tariq',
+			phone: '226-606-9930',
+			email: 'stariqmi@gmail.com',
+			date: '2015-12-20',
+			p_time: '12:30',
+			p_am_pm: 'am',
+			coach: 1,
+			status: 1
+		},
+		{
+			fname: 'Salman',
+			lname: 'Tariq',
+			phone: '226-606-9930',
+			email: 'stariqmi@gmail.com',
+			date: '2015-12-10',
+			p_time: '12:30',
+			p_am_pm: 'am',
+			coach: 1,
+			status: 1
+		}
+	];
 
-      .day .appointment {
-        margin: 2px 0 0 5px;
-        /*color: blue;*/
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="content"></div>
-    <script type="text/babel" src="http://web.mlcdates.com/calendar.js"></script>
-  </body>
+	$(document).ready(function() {
+		
+		$.ajax({
+			url: 'http://web.mlcdates.com/calendar_query/15',
+			dataType: 'json',
+			success: function(response) {
+				events = response;
+				console.log(events);	
+		$(".calendar").clndr({
+			template: $(".calendar-template").html(),
+			forceSixRows: true,
+			events: events,
+			clickEvents: {
+				click: function(target) {
+					if (target.events[0]) {
+						var evs = {
+							day: target.events[0].date,
+							evs: target.events
+						};
+
+						var template = _.template($('.events-template').html());
+						$(".events-container-main").html(template(evs));
+					}
+					else {
+						$(".events-container-main").html("");
+					}
+				}
+			}
+		});
+		
+		}
+		});
+		
+	});
+	</script>
 </html>
