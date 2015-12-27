@@ -103,29 +103,28 @@
 			success: function(response) {
 				events = response;
 				console.log(events);	
-		$(".calendar").clndr({
-			template: $(".calendar-template").html(),
-			forceSixRows: true,
-			events: events,
-			clickEvents: {
-				click: function(target) {
-					if (target.events[0]) {
-						var evs = {
-							day: target.events[0].date,
-							evs: target.events
-						};
+				$(".calendar").clndr({
+					template: $(".calendar-template").html(),
+					forceSixRows: true,
+					events: events,
+					clickEvents: {
+						click: function(target) {
+							if (target.events[0]) {
+								var evs = {
+									day: target.events[0].date,
+									evs: target.events
+								};
 
-						var template = _.template($('.events-template').html());
-						$(".events-container-main").html(template(evs));
+								var template = _.template($('.events-template').html());
+								$(".events-container-main").html(template(evs));
+							}
+							else {
+								$(".events-container-main").html("");
+							}
+						}
 					}
-					else {
-						$(".events-container-main").html("");
-					}
-				}
+				});
 			}
-		});
-		
-		}
 		});
 		
 	});

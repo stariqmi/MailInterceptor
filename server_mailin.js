@@ -29,7 +29,17 @@ db.once('open', function() {
 		p_am_pm: {type: String, required: '{AM/PM} is required'},
 		coach: {type: String},
 		status: {type: String, required: '{STATUS} is required'},
-		date: {type: String, required: '{DATE} is required'}
+		date: {type: String, required: '{DATE} is required'},
+
+        // Extra fields required
+        pickup_addr:    {type: String},
+        pickup_city:    {type: String},
+        pickup_zip:     {type: String},
+        drop_off_time:  {type: String},
+        drop_off_addr:  {type: String},
+        total_price:    {type: String},
+        hourly_rate:    {type: String},
+        hours_req:      {type: String}
 	});
 
 	Appointment = mongoose.model('Appointment', appointmentSchema);
@@ -57,8 +67,9 @@ server.get('/calendar_query/:year', function(req, res) {
 	console.log(req.params);
 	//res.send('Done');
 	
-	Appointment.find({p_year: parseInt(req.params.year)})
+	Appointment.find({p_year: req.params.year})
 	.exec(function(err, result) {
+		console.log(result);
 		res.send(result);
 	});
 });
@@ -131,7 +142,17 @@ server.post('/incoming', function (req, res) {
 			p_am_pm: 	extract($, info[8]).toUpperCase(),
 			coach: 		extract($, info[20]),
 			status:		(status_text.indexOf('Approved') === -1) ? 0 : 1,
-			date:		'20' + date_components[2] + '-' + date_components[0] + '-' + date_components[1]
+			date:		'20' + date_components[2] + '-' + date_components[0] + '-' + date_components[1],
+
+            // Extra Fields required
+            pickup_addr:    extract($, info[9]),
+            pickup_city:    extract($, info[10]),
+            pickup_zip:     extract($, info[11]),
+            drop_off_time:  extract($, info[12]),
+            drop_off_addr:  extract($, info[13]),
+            total_price:    extract($, info[16]),
+            hourly_rate:    extract($, info[17]),
+            hours_req:      extract($, info[18])
 		};
 
 		console.log(obj);
