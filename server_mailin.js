@@ -39,7 +39,8 @@ db.once('open', function() {
         drop_off_addr:  {type: String},
         total_price:    {type: String},
         hourly_rate:    {type: String},
-        hours_req:      {type: String}
+        hours_req:      {type: String},
+        passengers:     {type: String}
 	});
 
 	Appointment = mongoose.model('Appointment', appointmentSchema);
@@ -110,59 +111,68 @@ server.post('/incoming', function (req, res) {
     }());
 
     form.parse(req, function (err, fields) {
-        console.log(util.inspect(fields.mailinMsg, {
-            depth: 5
-        }));
+        
 
-        console.log('Parsed fields: ' + Object.keys(fields));
 
+        
         /* Write down the payload for ulterior inspection. */
         async.auto({
             writeParsedMessage: function (cbAuto) {
-		console.log('=========== Incoming Email ============');
-		var html = JSON.parse(fields.mailinMsg[0]).html;
-		
-		var $ = cheerio.load(html);
-		var info = $('span');
-		var status_text = $($('b')[4]).text();
+            	console.log('=========== Incoming Email ============');
+                var complete_mail  = JSON.parse(fields.mailinMsg[0]);
+            	var subject = complete_mail.subject;
+                var from = complete_mail.envelopeFrom.address;
+                
+                if (subject.indexOf('Transaction') < 0) {       // Add check: && from == "support@usaepay.com"
+                    console.log('Irrelevant Email, discard!');
+                    return;
+                }
 
-        var date_regex = /[\\\/-]/;
-        var date_components = extract($, info[6]).split(date_regex);
+                // HTML extraction
+                var html = complete_mail.html;
+            	
+            	var $ = cheerio.load(html);
+            	var info = $('span');
+            	var status_text = $($('b')[4]).text();
+
+                var date_regex = /[\\\/-]/;
+                var date_components = extract($, info[6]).split(date_regex);
 
 
-		var obj = {
-			fname: 		extract($, info[0]),
-			lname: 		extract($, info[1]),
-			phone: 		extract($, info[3]),
-			email: 		extract($, info[5]),
-			p_month:	date_components[0].toString(),
-			p_day:		date_components[1].toString(),
-			p_year:		date_components[2].toString(),
-			p_time: 	extract($, info[7]),
-			p_am_pm: 	extract($, info[8]).toUpperCase(),
-			coach: 		extract($, info[20]),
-			status:		(status_text.indexOf('Approved') === -1) ? 0 : 1,
-			date:		'20' + date_components[2] + '-' + date_components[0] + '-' + date_components[1],
+            	var obj = {
+            		fname: 		extract($, info[0]),
+            		lname: 		extract($, info[1]),
+            		phone: 		extract($, info[3]),
+            		email: 		extract($, info[5]),
+            		p_month:	date_components[0].toString(),
+            		p_day:		date_components[1].toString(),
+            		p_year:		date_components[2].toString(),
+            		p_time: 	extract($, info[7]),
+            		p_am_pm: 	extract($, info[8]).toUpperCase(),
+            		coach: 		extract($, info[20]),
+            		status:		(status_text.indexOf('Approved') === -1) ? 0 : 1,
+            		date:		'20' + date_components[2] + '-' + date_components[0] + '-' + date_components[1],
 
-            // Extra Fields required
-            pickup_addr:    extract($, info[9]),
-            pickup_city:    extract($, info[10]),
-            pickup_zip:     extract($, info[11]),
-            drop_off_time:  extract($, info[12]),
-            drop_off_addr:  extract($, info[13]),
-            total_price:    extract($, info[16]),
-            hourly_rate:    extract($, info[17]),
-            hours_req:      extract($, info[18])
-		};
+                    // Extra Fields required
+                    pickup_addr:    extract($, info[9]),
+                    pickup_city:    extract($, info[10]),
+                    pickup_zip:     extract($, info[11]),
+                    drop_off_time:  extract($, info[12]),
+                    drop_off_addr:  extract($, info[13]),
+                    total_price:    extract($, info[16]),
+                    hourly_rate:    extract($, info[17]),
+                    hours_req:      extract($, info[18]),
+                    passengers:     extract($, info[14])
+            	};
 
-		console.log(obj);
-		
-		// CODE TO ADD obj TO DATABASE
-		var app = new Appointment(obj);
-		app.save(function(err) {
-			if(err) console.log('ERROR: Unable to save.' + err);
-			else console.log('Appointment saved to DB');
-		});
+            	console.log(obj);
+            	
+            	// CODE TO ADD obj TO DATABASE
+            	var app = new Appointment(obj);
+            	app.save(function(err) {
+            		if(err) console.log('ERROR: Unable to save.' + err);
+            		else console.log('Appointment saved to DB');
+            	});
             },
             writeAttachments: function (cbAuto) {
                 var msg = JSON.parse(fields.mailinMsg);
