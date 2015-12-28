@@ -53,3 +53,25 @@ body {
   line-height: 50px;
   color: #b3b3b3;
 }
+.calendar-container .day-wrapper .day {
+  width: 14.28%;
+  float: left;
+  text-align: center;
+  font-size: 18px;
+  height: 50px;
+  line-height: 50px;
+  color: #4d4d4d;
+}
+.calendar-container .day-wrapper .adjacent-month {
+  color: #d9d9d9;
+}
+.calendar-container .day-wrapper .event .event-day {
+  width: 50px !important;
+  height: 50px !important;
+  background-color: #00bfff;
+  border-radius: 25px;
+  color: white;
+}
+.calendar-container .day-wrapper .event .event-day:hover {
+  cursor: pointer;
+}
