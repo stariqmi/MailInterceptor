@@ -1,0 +1,24 @@
+{
+  "name": "mail_interceptor",
+  "version": "1.0.0",
+  "description": "This repository hold the code for the webserver, webhook for **mailin.io**. **mailin.io** is a SMTP web server that intercepts incoming emails, parses it and POSTs it to a **webhook**.  The webhook has been implemented in this repository.",
+  "main": "._calender.js",
+  "dependencies": {
+    "async": "^1.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stariqmi/MailInterceptor.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stariqmi/MailInterceptor/issues"
+  },
+  "homepage": "https://github.com/stariqmi/MailInterceptor#readme"
+}
