@@ -9,7 +9,7 @@
 		<!-- CLNDR.js -->
 		<script type="text/javascript" src="clndr.min.js"></script>
 
-		<link rel="stylesheet" type="text/css" href="calendar.css">		
+		<link rel="stylesheet" type="text/css" href="calendar.css">
 	</head>
 	<body>
 		<div class="calendar"></div>
@@ -20,11 +20,14 @@
 	
 		<div class="calendar-container">
 			<div class="clndr-controls">
-				<div class="clndr-previous-button"><</div>
+				<div class="clndr-previous-button previous"><</div>
 				<div class="month"><%= month + ' - ' + year %></div>
-				<div class="clndr-next-button">></div>
+				<div class="clndr-next-button next">></div>
 			</div>
 			
+			<center>
+			<div class="seperator"></div>
+			</center>
 			<div class="day-wrapper">
 				<div class="dayOfWeek-container">
 					<% _.each(daysOfTheWeek, function(day) { %>

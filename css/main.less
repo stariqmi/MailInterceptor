@@ -1,36 +1,37 @@
-body {
-	font-family: ‘Arial Narrow’, sans-serif;
-}
+@width: 	100%;
+@height: 	490px;
 
-.calendar-container, .events-container-main {
-	float: left;
+body {
+	font-family: "Arial Narrow", sans-serif;
+	min-width: 400px;
 }
 
 .calendar-wrapper {
-	width: 490px;
-	height: 490px;
+	width: 	@width;
+	height: @height;
 }
 
 .day-wrapper {
 	padding: 0;
 	margin: 0;
-	width: 490px;
-	height: 490px;
+	width: @width;
+	height: @height;
 }
 
 .dayOfWeek-container {
 	margin: 0px;
 	padding: 0px;
 	height: 50px;
-	width: 490px;
+	width: @width;
 
 	margin-bottom: 1px;
 }
 
 .dayOfWeek-container .dayOfWeek {
-	width: 68px;
+	width: 12.28%;
 	height: 48px;
-	border: 1px solid white;
+	margin-left: 1%;
+	margin-right: 1%;
 	float: left;
 	background-color: #0086b3;
 	color: white;
@@ -57,9 +58,14 @@ body {
 }
 
 /* Calendar Controls */
+
+@cntrl_width:			100%;
+@cntrl_height: 			50px;
+@cntrl_button_width:		5%;
+
 .clndr-controls {
-	width: 490px;
-	height: 50px;
+	width: @cntrl_width;
+	height: @cntrl_height;
 	
 	margin: 0px;
 	padding: 0px;
@@ -69,22 +75,19 @@ body {
 	float: left;
 	background-color: #4d4d4d;
 	text-align: center;
-	line-height: 50px;
+	line-height: @cntrl_height;
 	color: white;
 	font-size: 18px;
+	height: @cntrl_height;
 }
 
 .clndr-previous-button, .clndr-next-button {
-	width: 50px;
+	width: @cntrl_button_width;
 	cursor: pointer;
 }
 
-.clndr-previous-button {
-	margin-left: 1px;
-}
-
 .month {
-	width: 388px;
+	width: @cntrl_width - (2 * @cntrl_button_width);
 }
 
 .event {

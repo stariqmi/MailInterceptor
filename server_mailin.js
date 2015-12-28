@@ -63,6 +63,7 @@ server.use(function(req, res, next) {
 
 server.use(express.static('js'));
 server.use(express.static('css'));
+server.use(express.static('/root/webserver/MailInterceptor/bower_components/bootstrap/dist/css'));
 
 server.get('/calendar_query/:year', function(req, res) {
 	console.log(req.params);
