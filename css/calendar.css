@@ -3,6 +3,7 @@ body {
 }
 .calendar-container {
   width: 100%;
+  height: 460px;
 }
 .calendar-container .clndr-controls {
   width: 100%;
@@ -74,4 +75,34 @@ body {
 }
 .calendar-container .day-wrapper .event .event-day:hover {
   cursor: pointer;
+}
+.day-of-interest {
+  color: #00bfff;
+  height: 100px;
+  font-size: 40px;
+  line-height: 100px;
+}
+.seperator-interest {
+  width: 90%;
+  height: 2px;
+  background-color: #d9d9d9;
+}
+.events-container {
+  width: 100%;
+}
+.events-container .event-elem {
+  width: 300px;
+  font-size: 17px;
+  margin-top: 30px;
+  text-align: left;
+}
+.events-container .event-elem p {
+  margin: 0;
+  padding: 0;
+}
+.events-container .event-elem p.first {
+  border-bottom: 3px solid #00bfff;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
 }

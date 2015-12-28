@@ -48,17 +48,24 @@
 	</script>
 
 	<script type="template/text" class="events-template">
-		<div class="event-day"><%= day %></div>
+		<center>
+		<div class="day-of-interest"><%= day %></div>
+		<div class="seperator-interest"></div>
 		<div class="events-container">
 			<% _.each(evs, function(ev) { %>
 				<div class="event-elem">
-				 	<p><%= ev.lname + ', ' + ev.fname + ' - ' + ev.phone %></p>
-				 	<p>Coach # <%= ev.coach + ' - ' + ev.p_time + ' ' + ev.p_am_pm%></p>
+				 	<p class="first"><%= ev.lname + ', ' + ev.fname + ' - ' + ev.phone %></p>
+				 	<p>Coach # <%= ev.coach + ' - ' + ev.p_time + ' ' + ev.p_am_pm + '-' + ev.drop_off_time%></p>
 				 	<p>Status: <%= (ev.status === '0') ? 'Declined' : 'Approved'  %></p>
-				 	
+					<p>Pickup at: <%= ev.pickup_addr + ', ' + ev.pickup_city + ', ' + ev.pickup_zip %></p>
+					<p>Total Price: <%= ev.total_price %></p>
+					<p>Hourly Rate: <%= ev.hourly_rate %></p>
+					<p>Hours Req: <%= ev.hours_req %></p>
+					<p>Passengers: <%= ev.passengers %></p> 
 				</div>
 			<% }); %>
 		</div>
+		</center>
 	</script>
 
 	<!-- Custom JavaScript -->
