@@ -111,7 +111,7 @@
 	$(document).ready(function() {
 		
 		$.ajax({
-			url: 'http://web.mlcdates.com/calendar_query/15',
+			url: 'http://web.mlcdates.com/calendar_query/16',
 			dataType: 'json',
 			success: function(response) {
 				events = response;
@@ -125,7 +125,7 @@
 							if (target.events[0]) {
 								var evs = {
 									day: target.events[0].date,
-									evs: target.events
+									evs: _.sortBy(target.events, 'coach')
 								};
 
 								var template = _.template($('.events-template').html());

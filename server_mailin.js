@@ -8,9 +8,10 @@ var multiparty = require('multiparty');
 var util = require('util');
 var mongoose = require('mongoose');
 var path = require('path');
+var htmlToText = require('html-to-text');
 
 // DB Schema and Model Setup
-var appointmentSchema, Appointment;
+var appointmentSchema, Appointment, emailSchema, Email;
 
 // DB Connection Setup
 mongoose.connect('mongodb://oleg:oleg@ds059284.mongolab.com:59284/mlc_dates');
@@ -44,12 +45,21 @@ db.once('open', function() {
 	});
 
 	Appointment = mongoose.model('Appointment', appointmentSchema);
+
+    emailSchema = mongoose.Schema({
+        email: String
+    });
+
+    Email = mongoose.model('Email', emailSchema);
 });
 
 
 // Helper Functions
 function extract(jq, elem) {
-	return jq(elem).text().slice(22);
+	var text = jq(elem).text().slice(22);
+	// console.log(jq(elem).html());
+	console.log(text);
+	return text;
 }
 
 /* Make an http server to receive the webhook. */
@@ -131,49 +141,72 @@ server.post('/incoming', function (req, res) {
 
                 // HTML extraction
                 var html = complete_mail.html;
-            	
-            	var $ = cheerio.load(html);
-            	var info = $('span');
-            	var status_text = $($('b')[4]).text();
+        		
+                // Convert to raw text
+                var appointment = htmlToText.fromString(html);
+        		
+                // Save raw data for backup
+                var email = new Email({email: appointment});
+                email.save(function(err) {
+                    if (err) console.log('ERROR: Unable to save email.' + err);
+                    else console.log('Email saved to DB');
+                });
 
-                var date_regex = /[\\\/-]/;
-                var date_components = extract($, info[6]).split(date_regex);
+                try {
+            		var details = appointment.split('\n').slice(0,25);
+            		
+                    // Extract appointment data
+            		for (var i = 0; i < details.length; i++) {
+                        // First Name: Salman Tariq -> Salman Tariq
+            			var cut_at = details[i].indexOf(':') + 2; // 2: 1 to eliminate the : itself and 1 to eliminate the extra initial space
+            			details[i] = details[i].substring(cut_at);
+            		}
+            		
+            		console.log(details);
+    	
+    		
+                    var date_regex = /[\\\/-]/;
+                    var date_components = details[6].split(date_regex);
 
+                	var obj = {
+                		fname: 		details[0],
+                		lname: 		details[1],
+                		phone: 		details[3].slice(0, details[3].indexOf('[') - 1),
+                		email: 		details[5].slice(0, details[5].indexOf('[') - 1),
+                		p_month:	date_components[0].toString(),
+                		p_day:		date_components[1].toString(),
+                		p_year:		date_components[2].toString().replace('20',''),
+                		p_time: 	details[7],
+                		p_am_pm: 	details[8].toUpperCase(),
+                		coach: 		details[20],
+                		status:		(subject.indexOf('Approved') === -1) ? 0 : 1,
+                		date:		'20' + date_components[2].replace('20', '') + '-' + date_components[0] + '-' + date_components[1],
 
-            	var obj = {
-            		fname: 		extract($, info[0]),
-            		lname: 		extract($, info[1]),
-            		phone: 		extract($, info[3]),
-            		email: 		extract($, info[5]),
-            		p_month:	date_components[0].toString(),
-            		p_day:		date_components[1].toString(),
-            		p_year:		date_components[2].toString(),
-            		p_time: 	extract($, info[7]),
-            		p_am_pm: 	extract($, info[8]).toUpperCase(),
-            		coach: 		extract($, info[20]),
-            		status:		(status_text.indexOf('Approved') === -1) ? 0 : 1,
-            		date:		'20' + date_components[2] + '-' + date_components[0] + '-' + date_components[1],
+                        // Extra Fields required
+                        pickup_addr:    details[9],
+                        pickup_city:    details[10],
+                        pickup_zip:     details[11],
+                        drop_off_time:  details[12],
+                        drop_off_addr:  details[13],
+                        total_price:    details[16],
+                        hourly_rate:    details[17],
+                        hours_req:      details[18],
+                        passengers:     details[14]
+                	};
 
-                    // Extra Fields required
-                    pickup_addr:    extract($, info[9]),
-                    pickup_city:    extract($, info[10]),
-                    pickup_zip:     extract($, info[11]),
-                    drop_off_time:  extract($, info[12]),
-                    drop_off_addr:  extract($, info[13]),
-                    total_price:    extract($, info[16]),
-                    hourly_rate:    extract($, info[17]),
-                    hours_req:      extract($, info[18]),
-                    passengers:     extract($, info[14])
-            	};
-
-            	console.log(obj);
-            	
-            	// CODE TO ADD obj TO DATABASE
-            	var app = new Appointment(obj);
-            	app.save(function(err) {
-            		if(err) console.log('ERROR: Unable to save.' + err);
-            		else console.log('Appointment saved to DB');
-            	});
+                	console.log(obj);
+                	
+                	// CODE TO ADD obj TO DATABASE
+                	var app = new Appointment(obj);
+                	app.save(function(err) {
+                		if(err) console.log('ERROR: Unable to save.' + err);
+                		else console.log('Appointment saved to DB');
+                	});
+                }
+                catch (e) {
+                    console.log(e);
+                }
+		
             },
             writeAttachments: function (cbAuto) {
                 var msg = JSON.parse(fields.mailinMsg);
